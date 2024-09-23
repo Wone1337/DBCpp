@@ -24,11 +24,18 @@
 #include "main2.hpp"
 #include "main.hpp"
 #include <cmath>
+#include <ncurses.h>
+#include <tuple>
+#include <typeinfo>
 
 
 
-int main(int arg, char **argc)
+
+int main(int *argc, int **argv) 
 {
+ 
+
+
 
 
 }
