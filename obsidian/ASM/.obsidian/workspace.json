@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "4f4a4b08f8fc2bea",
@@ -148,10 +149,18 @@
   },
   "active": "96c6029bd6b192df",
   "lastOpenFiles": [
+    "Pasted image 20240925024450.png",
+    "Pasted image 20240925022910.png",
+    "Pasted image 20240925022821.png",
+    "Pasted image 20240925022810.png",
+    "Pasted image 20240925015323.png",
+    "Pasted image 20240925005327.png",
+    "Pasted image 20240925005015.png",
+    "Pasted image 20240925004114.png",
+    "Pasted image 20240925000618.png",
+    "Pasted image 20240925000539.png",
     "Pasted image 20240923023936.png",
     "Welcome.md",
-    "ASM \"Путь воина\".md",
-    "Pasted image 20240922234809.png",
-    "Pasted image 20240922233913.png"
+    "ASM \"Путь воина\".md"
   ]
 }
