@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "547f973c84df664b",
+        "id": "b291d9990c108c47",
         "type": "tabs",
         "children": [
           {
-            "id": "96c6029bd6b192df",
+            "id": "1e2e56a69e980929",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -147,20 +147,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "96c6029bd6b192df",
+  "active": "1e2e56a69e980929",
   "lastOpenFiles": [
-    "Pasted image 20240925024450.png",
-    "Pasted image 20240925022910.png",
-    "Pasted image 20240925022821.png",
-    "Pasted image 20240925022810.png",
-    "Pasted image 20240925015323.png",
-    "Pasted image 20240925005327.png",
-    "Pasted image 20240925005015.png",
-    "Pasted image 20240925004114.png",
-    "Pasted image 20240925000618.png",
-    "Pasted image 20240925000539.png",
-    "Pasted image 20240923023936.png",
-    "Welcome.md",
-    "ASM \"Путь воина\".md"
+    "Pasted image 20241007042902.png",
+    "ASM \"Путь воина\".md",
+    "Pasted image 20241007033720.png",
+    "Pasted image 20241007033158.png",
+    "Pasted image 20241007033157.png",
+    "Pasted image 20241007033051.png",
+    "Pasted image 20241007021347.png",
+    "Pasted image 20241007020937.png",
+    "Pasted image 20241006062226.png",
+    "Pasted image 20241006060257.png",
+    "Pasted image 20241003042100.png",
+    "Pasted image 20241003041240.png",
+    "Untitled.canvas",
+    "Welcome.md"
   ]
 }
