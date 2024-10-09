@@ -5,92 +5,91 @@
 #include <memory>
 #include <thread>
 #include <unistd.h>
+
 namespace biba
     {
-        using size_t_int = unsigned int;
+        template<typename T>class Allocator;
         template<typename T> class MemoryManager;
 
+        template<typename T> class Allocator
+        {
+            public:
+
+            void* biba_init()
+            {
+                
+                   to_rotate = sbrk(size);
+                   return to_rotate;           
+            }
+
+            void* biba()
+            {
+
+            }
+
+            void* freedom()
+            {
 
 
+            } 
+
+            private:
+            size_t size = sizeof(T);
+            void *to_rotate;
+        };
 
 
-
-        template<typename T> class MemoryManager
+        template<typename T> class MemoryManager:public Allocator<T>
             {
                 public:
-                explicit MemoryManager(const T& _variable,const size_t_int _size = sizeof(T)):InType(_variable),size(_size) {}
-                explicit MemoryManager(const T&& _variable,const size_t_int _size = sizeof(T)):InType(std::move(_variable)),size(_size){}
+                MemoryManager() = default;
+                explicit MemoryManager(const T& _variable):InType(_variable) 
+                {
+                    Allocator<T>::biba_init();
+                }
+                explicit MemoryManager(const T&& _variable):InType(std::move(_variable)){}
                 MemoryManager &operator=(MemoryManager&& value) noexcept = default;
                 MemoryManager &operator=(const MemoryManager& value) noexcept = default;
                 
-
-                void* alloc(size_t_int __size = 0)
-                {
+                
+                ~MemoryManager(){};
                 
 
-                    if(sizeof(size_t_int) == __size)
-                    {
-                        std::cerr << "Eror of memory allocated\n" << std::flush; 
-                        return nullptr;
-                    }
-
-
-                    to_rotate = sbrk(__size); 
-
-                    return to_rotate;
-                }
-
-                ~MemoryManager()
-                {
-                    
-                };
-
-                
                 private:
-                size_t_int size;
-                void *to_rotate;
                 T InType;
-             
- 
+
             };
 
+       
+           
 
-            // template<typename T>
-            // class A 
-            // {
-            //     public:
-            //     A(const T& _e):e(_e){}
-            //     const A &operator=(const A &value)
-            //     {
-            //         return A{value.e};
-            //     }
-            //     private:
-            //     T e;
-            // };
-      
+    
 
     };
 //MemoryManager<int[]> mem ;
 
 
-
+void* my_malloc(size_t size) {
+    return sbrk(size); // Запрашиваем у sbrk `size` байт
+}
 
 
 
 int main([[maybe_unused]]int argc,[[maybe_unused]] char **argv) 
 {
-// int s = 10;
+    
+    int s = 10;
 // const int &f  = s;
 // biba::MemoryManager<int> e{10};
 
+ int* array = (int*)my_malloc(10 * sizeof(int));
 
-biba::MemoryManager<int> f(10);
 
-f.alloc(-10);
+// biba::MemoryManager<int> f(s);
+
 
 // std::cout << sizeof(intptr_t); 
 
-// std::shared_ptr<std::vector<int>>(std::vector<int>{10,10,10});
 return 0;
 }
 
