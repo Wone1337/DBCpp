@@ -3,6 +3,8 @@
 #include <vector>
 #include <unistd.h>
 #include <cmath>
+#include <fstream>
+#include <memory>
 
 
 
@@ -131,6 +133,42 @@ namespace biba
            
 
 
+        class ResourceFile
+        {
+                public:
+                
+                ResourceFile() = default;
+
+                void overwrite()
+                {
+
+
+                }
+                void writelast()
+                {
+
+
+                }
+                void read()
+                {
+
+
+                }
+
+                private:
+                std::fstream in_out;
+                std::string str;
+                std::shared_ptr<ResourceFile> pointer;
+ 
+                protected:
+
+        };
     };
 
 #endif 
+
+//  Умные указатели:
+//         Создай класс Resource, который управляет некоторым ресурсом (например, открытым файлом или сетевым соединением). 
+//         Используй std::shared_ptr для управления этим ресурсом 
+//         и реализуй функции для создания, копирования и перемещения 
+//         объектов. Обеспечь корректное управление ресурсами.
