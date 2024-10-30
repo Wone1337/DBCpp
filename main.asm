@@ -10,19 +10,18 @@ PUSH RSI
 PUSH RDX
 PUSH RCX
 
+CALL STR_TO_INT
+
 MOV RAX , 0
 
 MOV RDI , 0
 
 MOV RSI , buffer
 
-MOV RDX , buffer
+MOV RDX , 0x64
 
 SYSCALL
 
-NOP
-
-CALL STR_TO_INT
 
 POP RCX
 POP RDX
@@ -36,28 +35,35 @@ RET
 
 COUT:
 
+PUSH RAX
+PUSH RDI
+PUSH RSI
+PUSH RDX
+PUSH RCX
+
 CALL INT_TO_STR
 
 MOV RAX , 1
 
 MOV RDI , 1
 
-MOV RSI , stroka
+MOV RSI , buffer
 
-MOV RDX , buffer
+MOV RDX , 0x64
 
 SYSCALL
 
+POP RCX
+POP RDX
+POP RSI
+POP RDI
+POP RAX
 
 RET
  
 
 ;---------------------------STR_TO_INT---------------------------
-STR_TO_INT:
-
-PUSH RAX
-PUSH RBX
-PUSH RSI
+STR_TO_INT: ; TODO: переделать
 
 XOR RAX , RAX 
 
@@ -88,21 +94,14 @@ JMP MINI_LOOP
 IDONE:
 
 
-MOV [between] , RAX 
-
-POP RSI
-POP RBX
-POP RAX
+MOV [between_number] , RAX 
 
 RET
 
 ;---------------------------INT_TO_STR---------------------------
 
-INT_TO_STR:
+INT_TO_STR: ; TODO: переделать
 
-PUSH RAX
-PUSH RDX
-PUSH RCX
 
 MOV RAX , [result]
 
@@ -124,9 +123,8 @@ CMP RAX , 0x00
 
 JNZ LOPP
 
-POP RCX
-POP RDX
-POP RAX
+
+MOV [between_string] , RCX 
 
 RET
 
@@ -152,24 +150,11 @@ _start:
 
 NOP
 
-XOR RCX , RCX
-
-CALL CIN
-
-ADD RCX , [between]
-
-CALL CIN
-
-ADD RCX , [between]
-
-MOV [result] , RCX
-
-CALL COUT
-
-CALL CALL_EXIT
 
 
 section .data
+
+;my global variable
 
 number1 db 0x00
 
@@ -177,10 +162,10 @@ number2 db 0x00
 
 result  db 0x00
 
-between db 0x00
+;global variable for functions
+between_number db 0x00
 
-
-stroka db "" , 0x00
+between_string db "" , 0x00 , 0x0A 
 
 section .bss
 
