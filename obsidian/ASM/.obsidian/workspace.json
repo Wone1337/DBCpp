@@ -16,7 +16,9 @@
                 "file": "ASM \"Путь воина\".md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "ASM \"Путь воина\""
             }
           }
         ]
@@ -39,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -54,7 +58,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -62,7 +68,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
@@ -94,7 +102,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for ASM \"Путь воина\""
             }
           },
           {
@@ -106,7 +116,9 @@
                 "file": "ASM \"Путь воина\".md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from ASM \"Путь воина\""
             }
           },
           {
@@ -117,7 +129,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -127,7 +141,9 @@
               "type": "outline",
               "state": {
                 "file": "ASM \"Путь воина\".md"
-              }
+              },
+              "icon": "lucide-list",
+              "title": "Outline of ASM \"Путь воина\""
             }
           }
         ]
@@ -149,18 +165,18 @@
   },
   "active": "1e2e56a69e980929",
   "lastOpenFiles": [
-    "Pasted image 20241009044656.png",
-    "Pasted image 20241007042902.png",
+    "Pasted image 20241024054031.png",
+    "Pasted image 20241024054011.png",
+    "Pasted image 20241024053955.png",
+    "Pasted image 20241024052642.png",
+    "Pasted image 20241024052632.png",
+    "Pasted image 20241024052459.png",
+    "Pasted image 20241024052457.png",
+    "Pasted image 20241023073915.png",
+    "Pasted image 20241023072834.png",
+    "Pasted image 20241023072826.png",
+    "Pasted image 20241023072817.png",
     "ASM \"Путь воина\".md",
-    "Pasted image 20241007033720.png",
-    "Pasted image 20241007033158.png",
-    "Pasted image 20241007033157.png",
-    "Pasted image 20241007033051.png",
-    "Pasted image 20241007021347.png",
-    "Pasted image 20241007020937.png",
-    "Pasted image 20241006062226.png",
-    "Pasted image 20241006060257.png",
-    "Pasted image 20241003042100.png",
     "Untitled.canvas",
     "Welcome.md"
   ]

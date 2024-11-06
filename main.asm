@@ -10,8 +10,6 @@ PUSH RSI
 PUSH RDX
 PUSH RCX
 
-CALL STR_TO_INT
-
 MOV RAX , 0
 
 MOV RDI , 0
@@ -21,7 +19,6 @@ MOV RSI , buffer
 MOV RDX , 0x64
 
 SYSCALL
-
 
 POP RCX
 POP RDX
@@ -40,8 +37,6 @@ PUSH RDI
 PUSH RSI
 PUSH RDX
 PUSH RCX
-
-CALL INT_TO_STR
 
 MOV RAX , 1
 
@@ -63,11 +58,17 @@ RET
  
 
 ;---------------------------STR_TO_INT---------------------------
-STR_TO_INT: ; TODO: переделать
+STR_TO_INT: 
+
+PUSH RAX
+PUSH RBX
+PUSH RSI
 
 XOR RAX , RAX 
 
 XOR RBX , RBX 
+
+MOV RSI , buffer
 
 MINI_LOOP:
 
@@ -93,38 +94,19 @@ JMP MINI_LOOP
 
 IDONE:
 
+MOV [buffer] , RAX 
 
-MOV [between_number] , RAX 
+POP RSI
+POP RBX
+POP RAX
 
 RET
 
 ;---------------------------INT_TO_STR---------------------------
 
-INT_TO_STR: ; TODO: переделать
+INT_TO_STR: ;TODO: переделать
 
 
-MOV RAX , [result]
-
-XOR RCX , RCX
-
-MOV CL , 0x10
-
-LOPP:
-
-XOR RDX , RDX
-
-DIV CL 
-
-ADD RDX , '0'
-
-ADD RCX , RDX
-
-CMP RAX , 0x00
-
-JNZ LOPP
-
-
-MOV [between_string] , RCX 
 
 RET
 
@@ -148,24 +130,50 @@ global _start
 
 _start:
 
-NOP
+CALL CIN
+
+CALL STR_TO_INT
+
+;MOV RBX , [buffer]
+
+;MOV [biba] , RBX
+
+ADD RBX , [buffer]
+
+CALL CIN
+
+CALL STR_TO_INT
+
+ADD RBX , [buffer]
+;MOV RBX , [buffer]
+
+;MOV [boba] , RBX
+
+
+
+;ADD RBX , [biba]
+
+;ADD RBX , [boba]
+
+MOV [buffer] , RBX
+
+XOR RBX , RBX
+
+CALL INT_TO_STR
+
+CALL COUT
+
+CALL CALL_EXIT
+
+
+
+
+
+
 
 
 
 section .data
-
-;my global variable
-
-number1 db 0x00
-
-number2 db 0x00
-
-result  db 0x00
-
-;global variable for functions
-between_number db 0x00
-
-between_string db "" , 0x00 , 0x0A 
 
 section .bss
 
