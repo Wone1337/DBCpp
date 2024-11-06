@@ -106,9 +106,42 @@ RET
 
 INT_TO_STR: ;TODO: переделать
 
+    PUSH RAX
+    PUSH RBX
+    PUSH RCX
+    PUSH RSI
 
+    MOV RAX, [buffer] 
 
-RET
+    XOR RSI, RSI        
+    
+    MOV [buffer], RSI   
+
+    MOV CL, 0x0A       
+
+    LOOP:
+
+    DIV CL              ; Делим RAX на CL (10)
+    
+    MOV BL, AH          ; Копируем остаток (AH) в BL
+    
+    ADD BL, '0'         ; Преобразуем в ASCII
+    
+    ADD [buffer + RSI], BL ; Сохраняем результат в буфер
+    
+    INC RSI             ; Увеличиваем индекс
+    
+    CMP AL, 0x00        ; Проверяем, не равен ли результат деления нулю
+    
+    JNZ LOOP            ; Если результат не ноль, продолжаем цикл
+
+    
+    POP RSI
+    POP RCX
+    POP RBX
+    POP RAX
+
+    RET
 
 ;---------------------------CALL_EXIT----------------------------
 
