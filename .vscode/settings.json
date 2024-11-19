@@ -16,7 +16,7 @@
     "-Wconversion",
     "-Wsign-conversion",
     "-Wnull-dereference",
-    "-std=c++20"
+    "-std=c++23"
   ],
   "C_Cpp_Runner.msvcWarnings": [
     "/W4",
@@ -137,6 +137,14 @@
     "locale": "cpp",
     "queue": "cpp",
     "stack": "cpp",
-    "valarray": "cpp"
+    "valarray": "cpp",
+    "fstream": "cpp",
+    "socket": "cpp",
+    "executor": "cpp",
+    "cerrno": "cpp",
+    "internet": "cpp",
+    "io_context": "cpp",
+    "cstdarg": "cpp",
+    "cinttypes": "cpp"
   }
 }
