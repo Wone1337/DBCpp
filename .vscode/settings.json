@@ -145,6 +145,10 @@
     "internet": "cpp",
     "io_context": "cpp",
     "cstdarg": "cpp",
-    "cinttypes": "cpp"
+    "cinttypes": "cpp",
+    "codecvt": "cpp",
+    "numeric": "cpp",
+    "any": "cpp",
+    "stdfloat": "cpp"
   }
 }

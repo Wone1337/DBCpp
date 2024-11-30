@@ -23,15 +23,15 @@
     },
     {
       "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/biba/Documents/c++prac",
-      "program": "/home/biba/Documents/c++prac/build/Debug/outDebug",
+      "cwd": "/home/Bobik/Документы/another",
+      "program": "/home/Bobik/Документы/another/build/Debug/outDebug",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",

@@ -1,26 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-// #include <vector>
 #include <memory>
 #include <filesystem>
-// #include <limits>
-#include <cstdio>
+#include <iomanip>
 
 #ifndef BLAH
 #define BLAH
 
-
-
-
-
-
-
-namespace
-{
-    static inline size_t counter {0};
-
-}
 
 namespace res
 {
@@ -28,8 +15,8 @@ namespace res
     
 enum WRITESTATES
 {
-    WRITE_OUT = 0, 
-    WRITE_APP = 1,
+    WRITE_OUT = 0,
+    WRITE_APP = 1, 
     WRITE_ATE = 2,
     WRITE_TRUCN = 3,
     WRITE_BIN = 4
@@ -39,136 +26,65 @@ class Resource
 {
     public:
     Resource(){INIT();};
-    explicit Resource(std::string &__str):FILE_NAME(__str){INIT();};
-    explicit Resource(std::string &&__str):FILE_NAME(__str){INIT();};
+    explicit Resource(const std::string &__str,bool __save_file = false,const std::string &__path = std::filesystem::current_path()):FILE_NAME(__str),is_save(__save_file),PATH(__path){INIT();};
+    explicit Resource(const std::string &&__str,bool __save_file = false,const std::string &__path = std::filesystem::current_path()):FILE_NAME(__str),is_save(__save_file),PATH(__path){INIT();};
     
     Resource &operator=(const Resource &RES) = default;
     Resource &operator=(Resource &&RES) = default;
 
 
+   const void WRIF(const size_t __choice__ = WRITESTATES::WRITE_OUT, const std::string &__str__ = "FILE CLEARED") noexcept(true);
 
-    void WRIF([[maybe_unused]] const size_t __choice__ = WRITESTATES::WRITE_OUT, [[maybe_unused]]const std::string &__str__ = "FILE CLEARED")
-    {
-        size_t overflow_check = sizeof(WRITESTATES); 
+   const void REF() noexcept(true);
 
-        if(__choice__  > overflow_check)
-        {
-            std::cerr << "EROR: CHOICE WAS AN OVERFLOW BY USER" << std::endl;
-            std::cerr << "RETURN..." << std::endl;
-            return;
-        }
+   const void SWAP(res::Resource &__object__) noexcept(true);
 
-        switch(__choice__)
-        {
-        
-        case WRITESTATES::WRITE_APP:
-        (*FILE).open(FILE_NAME,std::ios::app);
-         if((*FILE).is_open())
-        {
-            *FILE << __str__ << std::endl;
-        }
-        break;
-
-        case WRITESTATES::WRITE_ATE:
-        (*FILE).open(FILE_NAME,std::ios::ate);
-        if((*FILE).is_open())
-        {
-            *FILE << __str__;
-        }
-        break;
-
-        case WRITESTATES::WRITE_TRUCN:
-        (*FILE).open(FILE_NAME,std::ios::trunc);
-
-        if((*FILE).is_open())
-        {
-            *FILE << __str__;
-        }
-        break;
-
-        case WRITESTATES::WRITE_BIN:
-        (*FILE).open(FILE_NAME,std::ios::binary);
-        if((*FILE).is_open())
-        {
-            *FILE << __str__;
-        }
-        break;
-
-        case WRITESTATES::WRITE_OUT:
-        [[fallthrough]]
-
-        default:
-        (*FILE).open(FILE_NAME,std::ios::out);
-        if((*FILE).is_open())
-        {
-            *FILE << __str__;
-        }
-        break;
-        
-
-    }
-     (*FILE).close();
-    }
-
-    //  void WRIF(const std::string &__str__ = "FILE CLEARED", const size_t __choice__ = 0) #Запись не через строку в 1 параметре , а через другой файл
-    // {
-    //     switch(__choice__):
-        
-    //     case 1:
-    //     (*FILE).open(FILE_NAME,std::ios::app);
-
-    //     break;
-
-    //     case 2:
-    //     (*FILE).open(FILE_NAME,std::ios::ate);
-    //     break;
-
-    //     case 3:
-    //     (*FILE).open(FILE_NAME,std::ios::trunc);
-    //     break;
-
-    //     case 4:
-    //     (*FILE).open(FILE_NAME,std::ios::binary);
-    //     break;
-
-    //     case 0:
-    //     [[fallthrough]]
-
-    //     default:
-    //     (*FILE).open(FILE_NAME,std::ios::out);
-
-    //     break;
-        
-
-    //     (*FILE).close();
-    // }
-
-
-    void REF() noexcept(true)
-    {
-        std::string STR;
-        (*FILE).open(FILE_NAME,std::ios::in);
-        if((*FILE).is_open())
-        {   
-            std::cout << "\nFILE CONTAIN:\n" << std::flush;
-            std::cout << "---------------------\n" << std::flush;
-
-            while(std::getline(*FILE,STR))
-            {
-                std::cout << STR << std::endl;
-            }
-
-            std::cout << "---------------------\n\n" << std::flush;
-        }
-        (*FILE).close();
-    }
-
-    void XCHNG([[maybe_unused]]res::Resource &__f1__,[[maybe_unused]]res::Resource &__f2__);
     
-    ~Resource(){}
+    ~Resource()
+    {
+         if(!is_save)
+         {
+            std::cout << "FILE " + FILE_NAME + " DESTROYED" <<std::endl;
+            remove(FILE_NAME.c_str());
+         }
+    }
 
     protected:
-    void INIT()
+    const void INIT() noexcept(true);
+    const void copy_obj(res::Resource &__obj_src,res::Resource &__obj_dest, std::string &__tmp_str) noexcept(true);
+
+
+    private:
+    std::shared_ptr<std::fstream> FILE;
+    std::string FILE_NAME;
+    bool is_save;
+    std::string PATH;
+
+
+};
+
+const void Resource::copy_obj(res::Resource &__obj_src,res::Resource &__obj_dest, std::string &__tmp_str) noexcept(true)
+{
+        __obj_dest.FILE->open(__obj_dest.FILE_NAME, std::ios::out);       
+        __obj_src.FILE->open(__obj_src.FILE_NAME, std::ios::in); 
+       *__obj_dest.FILE << __obj_src.FILE->rdbuf();
+        __obj_src.FILE->close();
+        __obj_dest.FILE->close();
+}
+
+const void Resource::SWAP(res::Resource &__object__) noexcept(true)
+   {
+        Resource __temp__("TEMP.txt");
+
+        std::string temp_string;
+
+    copy_obj(*this,__temp__,temp_string);
+    copy_obj(__object__,*this,temp_string);
+    copy_obj(__temp__,__object__,temp_string);
+
+  }
+
+const void Resource::INIT() noexcept(true)
     {
         if(std::filesystem::exists(FILE_NAME))
         {   
@@ -176,46 +92,112 @@ class Resource
         }
         else
         {
-            std::string str = "text" + std::to_string(counter) + ".txt";
-            std::string Current_path = std::filesystem::current_path();
-            FILE_NAME = Current_path + '/' + str;
+            if(FILE_NAME.empty())
+            {
+                FILE_NAME = "UNNAMED.txt";
+            }
+            FILE_NAME = PATH + '/' + FILE_NAME;
             std::cout << "FILE NOT EXIST,BUT CREATED NEW!\n" << std::flush;
-            ++counter;
         }
 
 
-        FILE = std::make_shared<std::fstream>(FILE_NAME);
+        FILE = std::make_shared<std::fstream>(FILE_NAME,std::ios::out);
         (*FILE).close();
 
     }
 
+const void Resource::REF() noexcept(true)
+    {
+        std::string STR;
+        (*FILE).open(FILE_NAME,std::ios::in);
+        if((*FILE).is_open())
+        {   
+            std::string head = "+---------------------------------+" ;
+            std::size_t head_size = head.size();
+            std::cout << "FILE " + FILE_NAME + " CONTAIN:\n" << std::flush;       
+            
 
-    private:
-    std::shared_ptr<std::fstream> FILE;
-    std::string FILE_NAME;
+            std::cout << head << std::endl;
 
+            while(std::getline(*FILE,STR))
+            {
+                if(STR.size() > head_size)
+                {
+                    STR = STR.substr(NULL,head.size()-5)  + "...";
+                }
+                std::cout << "|" << STR << std::setw(head_size-STR.size()-1) << '|'  << std::endl;
+            }
 
-};
+            std::cout << head << std::endl;
+        
+       }
+       else
+       {
+            std::cout << "REF:ERROR" << std::endl;
+       }
+        (*FILE).close();
+    }
 
-void XCHNG([[maybe_unused]]res::Resource &__f1__,[[maybe_unused]]res::Resource &__f2__)
-{
-     std::string TEMP_NAME_OF_FILE = "temp.txt";      
-           
-     std::shared_ptr<std::fstream> TEMP = std::make_shared<std::fstream>(TEMP_NAME_OF_FILE, std::ios::out);
-     
-      *TEMP << "";
-     
-     (*TEMP).close();   
+const void Resource::WRIF(const size_t __openmode__,const std::string &__str__) noexcept(true)
+    {
+        size_t overflow_check = sizeof(WRITESTATES); 
 
-     Resource __temp__(TEMP_NAME_OF_FILE); 
+        auto write = [this](const std::string &_str_)
+        { 
+            if((*FILE).is_open())
+            {
+                *FILE << _str_;
+            }
+            else
+            {
+                std::cout << "WRITE_LAMBDA_WRIF:ERROR" << std::endl;
+            }
 
-            __temp__ = __f1__;
-            __f1__ = __f2__;
-            __f2__ = __temp__;
+            (*FILE).close();
+        };
+        
 
-        //remove(TEMP_NAME_OF_FILE.c_str()); посмотреть удаление файла
-}
+        if(__openmode__  > overflow_check)
+        {
+            std::cerr << "EROR: CHOICE WAS AN OVERFLOW BY USER" << std::endl;
+            std::cerr << "RETURN..." << std::endl;
+            return;
+        }
 
+        switch(__openmode__)
+        {
+        
+        case WRITESTATES::WRITE_APP:
+        (*FILE).open(FILE_NAME,std::ios::app);
+        write(__str__);
+        break;
+
+        case WRITESTATES::WRITE_ATE:
+        (*FILE).open(FILE_NAME,std::ios::ate);
+        write(__str__);
+        break;
+
+        case WRITESTATES::WRITE_TRUCN:
+        (*FILE).open(FILE_NAME,std::ios::trunc | std::ios::out);
+        write(" ");
+        break;
+
+        case WRITESTATES::WRITE_BIN:
+        (*FILE).open(FILE_NAME, std::ios::out | std::ios::binary);
+        write(__str__);        
+        break;
+
+        case WRITESTATES::WRITE_OUT:
+        [[fallthrough]]
+
+        default:
+        (*FILE).open(FILE_NAME,std::ios::out);
+        write(__str__);
+        break;
+        
+
+    }
+    }
 
 }
 
