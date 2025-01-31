@@ -1,19 +1,18 @@
-COMPILER = nasm
+# ifeq ($(OS),Windows_NT)
+COMPILER = g++
+# else
+# COMPILER = i686-w64-mingw-cpp
+# endif
 
-LINKER = ld
+TARGET_NAME = *
 
-TARGET = *
-
-TARGET_NAME = main
-
-TARGET_TO_DIR = ASM_MAKE/
-
-all:	$(TARGET).asm
-		$(COMPILER) -f elf64 -g $(TARGET).asm 
-		$(LINKER) -o $(TARGET_NAME) $(TARGET_NAME).o
-		mv $(TARGET_NAME).o $(TARGET_NAME) $(TARGET_TO_DIR)
+TARGET_NAME_FOR_EXE = test
 
 
-
-clean:
-		$(RM) -i  $(TARGET_TO_DIR)$(TARGET)
+all: $(TARGET_NAME).cpp
+	 $(COMPILER) -c $(TARGET_NAME).cpp
+	 $(COMPILER) $(TARGET_NAME).o -o $(TARGET_NAME_FOR_EXE) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio 
+	 ./$(TARGET_NAME_FOR_EXE)
+	 
+# clean:
+# 	 rm -rf $(TARGET_NAME).o $(TARGET_NAME_FOR_EXE)

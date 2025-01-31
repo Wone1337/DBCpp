@@ -406,18 +406,142 @@ int b = 0;
         Оператор постфиксного декремента a-- 
         Убедитесь, что оператор постфиксного 
         инкремента/декремента корректно работает, возвращая старое значение до изменения.
+```C++
+class IncDec
+{
+  public:
+  
+  IncDec(int number__):number(number__) {} 
+
+  IncDec operator++(int)
+  {
+      IncDec temp = *this;
+
+      this->number++;
+
+      return temp; 
+  }
+
+  IncDec operator--(int)
+  {
+      IncDec temp = *this;
+
+      this->number--;
+
+      return temp; 
+  }
+
+  IncDec& operator++()
+  {
+      this->number++;
+
+      return *this; 
+  }
+
+  IncDec& operator--()
+  {
+      this->number--;
+
+      return *this; 
+  }
+
+
+  private:
+  int number;
+};
+
+```
 
 ## Задание 4: Операторы индексирования и обращения Напишите класс, который реализует контейнер для хранения массива чисел (например, std::vector<int>). Реализуйте для этого класса:
         Оператор индексирования [], который возвращает элемент по индексу.
         Оператор () для обращения к элементам через индекс с дополнительной 
         проверкой (например, выбрасывая исключение, если индекс выходит за пределы). 
-        Объясните, как эти операторы могут быть использованы для реализации "классической" работы с массивами.
+        Объясните, как эти операторы могут быть 
+        использованы для реализации "классической" работы с массивами.
+Код:
+```C++
+
+template<typename T>
+class Sosik
+{
+  public:
+  Sosik() = default;
+  Sosik(const std::initializer_list<T> &elements):elem_vector(elements) {}
+  Sosik(std::initializer_list<T> &&elements):elem_vector(std::move(elements)) {}
+  Sosik &operator=(const Sosik& param) = default;
+  Sosik &operator=(Sosik&& param) = default;
+
+  T operator[](std::size_t index)
+  {
+      return elem_vector[index];
+  }
+
+  T operator()(std::size_t index)
+  {
+    try
+    {
+      if(index >= this->elem_vector.size())
+      { 
+          throw std::out_of_range("OUT_OF_RANGE --> ");  
+      }
+
+      return this->elem_vector[index];
+    }
+    catch(const std::out_of_range &sos)
+    {
+       std::cout << sos.what() << " LAST ELEMENT OF ARRAY IS: ";
+       return this->elem_vector[elem_vector.size()-1];  
+    }
+  }
+
+
+  private:
+  std::vector<T> elem_vector;
+
+};
+```        
 
 ## Задание 5: Оператор приведения типов Напишите класс, который представляет собой прямоугольник, имеющий поля для ширины и высоты. Реализуйте для этого класса:
         Оператор приведения типов explicit operator double(), 
         который возвращает площадь прямоугольника (ширина * высота). 
         Убедитесь, что это работает в контексте преобразования типов и объясните, 
         почему важно использовать explicit в этом контексте.
+
+Код:
+```C++
+
+class Rectangle
+{
+  public:
+  
+  Rectangle(double length,double width):length(length),width(width) 
+  {
+      if(RelativeEpsilon(length,width))
+      {
+          std::cerr << "RECTANGLE IS NOT A SQUARE =(\n"; 
+          std::abort();
+      }
+  }
+  Rectangle &operator=(const Rectangle& param) = default;
+  
+  const bool RelativeEpsilon(double a, double b, double eps = 1E-9)
+  {
+      return std::abs(a - b) <= eps * std::abs(a) || std::abs(a-b) <= eps * std::abs(b);
+  }
+  
+  explicit operator double()
+  {
+      return static_cast<double>(length * width);
+  }
+  
+
+  private:
+  double length;
+  double width;
+
+
+};
+```
 
 # Задания для уровня Senior:
 
@@ -428,6 +552,62 @@ int b = 0;
         Напишите подробное объяснение, какие дополнительные шаги нужно предпринять 
         для правильной работы с этим классом в контексте стандартных контейнеров
         и алгоритмов, и как это влияет на безопасность кода.
+
+Код:        
+```C++
+//короче тут хуйня какая то , этот класс работает , но если запихнуть его в контейнер ,
+// то в рот получишь , я не понимаю как это фиксить
+template<typename T>
+class Wrapper
+{
+public:
+    Wrapper(const T& element) 
+    {
+        ptr = new T(element);
+    }
+
+    Wrapper(T&& element) 
+    {
+        ptr = new T(std::forward<T>(element));
+    }
+
+    Wrapper& operator=(const Wrapper& param) 
+    {
+        if (this != &param) 
+        {  
+            delete ptr;  
+            ptr = new T(*param.ptr);  
+        }
+        return *this;
+    }
+
+    Wrapper& operator=(Wrapper&& param) noexcept
+    {
+        if (this != &param) 
+        {  
+            delete ptr; 
+            ptr = param.ptr;  
+            param.ptr = nullptr;  
+        }
+        return *this;
+    }
+
+    const T& operator *() const
+    {
+        return *ptr;  
+    }
+
+
+    ~Wrapper()
+    {
+        delete ptr;  
+    }
+
+private:
+    T* ptr;  
+};
+
+```
 
 ## Задание 2: Перегрузка оператора new и delete Напишите класс, который использует перегрузку оператора new и delete. Реализуйте:
         Перегрузку оператора new для размещения памяти в конкретном 
